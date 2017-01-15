@@ -25,8 +25,9 @@ class travel_intelligence:
             dest_list.append(str(data['results'][i]['destination']))
         return dest_list
 t1=travel_intelligence('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
-print(t1.top_flight_destinations('2015-09','BOS'))
-print(t1.top_flight_search('2015-09','BOS','US'))
+if __name__=='__main__':
+    print(t1.top_flight_destinations('2015-09','BOS'))
+    print(t1.top_flight_search('2015-09','BOS','US'))
 
 
 

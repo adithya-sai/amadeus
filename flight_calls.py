@@ -48,10 +48,10 @@ class flight_calls:
                 self.origin = str(resp['results'][i]['itineraries'][j]['outbound']['flights'][k]['origin']['airport'])#+' - Terminal '+str(resp['results'][i]['itineraries'][j]['outbound']['flights'][k]['origin']['terminal'])
                 self.destination = str(resp['results'][i]['itineraries'][j]['outbound']['flights'][k]['destination']['airport'])#+' - Terminal '+str(resp['results'][i]['itineraries'][j]['outbound']['flights'][k]['destination']['terminal'])
                 self.flight_arrival = resp['results'][i]['itineraries'][j]['outbound']['flights'][k]['booking_info']['travel_class']
-                self.fare=resp['results'][i]['fare']
+                self.fare=resp['results'][i]['fare']['total_price']
 
 
 # flight number, departs at, arrives at, airport, terminal,destination,
 f1=flight_calls('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
-lst=(f1.flight_low_fare_search('NYC','BOS','2017-01-14'))
-print(lst[0].flight_number)
+# lst=(f1.flight_low_fare_search('NYC','BOS','2017-01-14'))
+# print(lst[0].flight_number)
