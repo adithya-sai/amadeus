@@ -2,7 +2,7 @@ from travel_intelligence import travel_intelligence
 from flight_calls import flight_calls
 from CarRental import CarRental
 import current_location as cl
-from Stay_py import Stay
+from Stay import Stay
 
 iata={'Los Angeles':'LAX', 'Tucson':'TUS', 'Las Vegas':'LAS', 'Denver':'DEN','Chicago':'CHI','San Deigo':'SAN','Seattle':'SEA','Dallas':'DFW','New York':'NYC','San Francisco':'SFO','Phoenix':'PHX'}
 
@@ -42,26 +42,47 @@ prev_year=int(m1.start[:4])-2
 year_str=str(prev_year)+m1.start[4:7]
 old_dest_list=t1.top_flight_destinations(year_str,m1.location)
 new_dest_list_flight=m1.get_feasible_flight(old_dest_list)
-#hotel_dest_list=m1.get_feasible_hotel(new_dest_list_flight)
-#print hotel_dest_list
 
-car_rental_dist = []
+print new_dest_list_flight
+
+
 c = CarRental()
+car_rental_dist = []
 for i in range(len(new_dest_list_flight)):
-        carrentals = c.getCarRentalAirportSearch(new_dest_list_flight[i][0],'2017-01-16','2017-01-18')
+        carrentals = c.getCarRentalAirportSearch(new_dest_list_flight[i][0],'2017-01-16','2017-01-19')
         min = float('inf')
         loc = None
+        count = 0
         if carrentals:
             for carrental in carrentals:
-                if float(carrental.amount[3:]) < min:
-                    min = float(carrental.amount[3:])
-                    loc = new_dest_list_flight[i][0]
-
-        car_rental_dist += [min,loc]
+                if carrental.amount:
+                    if float(carrental.amount[3:]) < min:
+                        min = float(carrental.amount[3:])
+                        loc = new_dest_list_flight[i][0]
+                        count += 1
+        if count > 0:              
+            car_rental_dist.append([loc,min])
 
 print car_rental_dist
 
+s = Stay()
+hotel_rental_dist = []
+for i in range(len(new_dest_list_flight)):
+        hotels = s.getAirportHotelSearch(new_dest_list_flight[i][0],'2017-01-16','2017-01-19')   
+        minimum = float('inf')
+        loc = None
+        count = 0
+        if hotels:
+            for hotel in hotels:
+                if hotel.min_daily_amount:
+                    if float(hotel.min_daily_amount[3:]) < minimum:
+                        minimum = float(hotel.min_daily_amount[3:])
+                        loc = new_dest_list_flight[i][0]
+                        count += 1
+        if count > 0:                
+            hotel_rental_dist.append([loc,minimum])
 
+print hotel_rental_dist
 
 
 
