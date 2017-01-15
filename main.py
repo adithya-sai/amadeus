@@ -3,9 +3,6 @@ from flight_calls import flight_calls
 from CarRental import CarRental
 import current_location as cl
 from Stay import Stay
-#from poi import poi
-import matplotlib.pyplot as pit
-import numpy as np
 
 iata={'Los Angeles':'LAX', 'Tucson':'TUS', 'Las Vegas':'LAS', 'Denver':'DEN','Chicago':'CHI','San Deigo':'SAN','Seattle':'SEA','Dallas':'DFW','New York':'NYC','San Francisco':'SFO','Phoenix':'PHX'}
 
@@ -38,6 +35,8 @@ class Main:
             new_list.append([dest_list[i][0],temp[0].min_daily_amount])
         return new_list
 
+
+
     
 m1=Main(1000,'2017-01-16','2017-01-18')
 t1=travel_intelligence('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
@@ -45,6 +44,7 @@ prev_year=int(m1.start[:4])-2
 year_str=str(prev_year)+m1.start[4:7]
 old_dest_list=t1.top_flight_destinations(year_str,m1.location)
 new_dest_list_flight=m1.get_feasible_flight(old_dest_list)
+
 
 
 c = CarRental()
@@ -81,6 +81,51 @@ for i in range(len(new_dest_list_flight)):
                         count += 1
         if count > 0:                
             hotel_rental_dist.append([loc,minimum])
+
+
+
+
+new_flight=flight_calls('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
+flight_info=new_flight.flight_low_fare_search(m1.location,new_dest_list_flight[0][0],m1.start)
+print("*************RECOMMENDER SYSTEM***************\n\n")
+
+print("Flight Details")
+print(flight_info[0].flight_number)
+print(flight_info[0].flight_departure)
+print(flight_info[0].flight_arrival)
+print(flight_info[0].origin)
+print(flight_info[0].destination)
+print(flight_info[0].fare)
+print(flight_info[0].flight_class)
+
+
+new_hotel=Stay()
+hotel_info=new_hotel.getAirportHotelSearch(new_dest_list_flight[0][0],m1.start,m1.end)
+print("\nHotel Details")
+
+print(hotel_info[0].property_name)
+print(hotel_info[0].address)
+print(hotel_info[0].min_daily_amount)
+print(hotel_info[0].phone)
+print(hotel_info[0].fax)
+print(hotel_info[0].description)
+print(hotel_info[0].room_type)
+
+
+
+# new_car=CarRental()
+# car_info=new_car.getCarRentalAirportSearch(new_dest_list_flight[0][0],m1.start,m1.end)
+# print("\nCar Details")
+#
+# # print(new_car[0].company_name)
+# print(new_car[0].airport_code)
+# print(new_car[0].address)
+# print(new_car[0].acriss_code)
+# print(new_car[0].type)
+# print(new_car[0].amount)
+
+
+
 
 
 
