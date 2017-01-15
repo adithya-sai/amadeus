@@ -35,6 +35,8 @@ class Main:
             new_list.append([dest_list[i][0],temp[0].min_daily_amount])
         return new_list
 
+
+
     
 m1=Main(1000,'2017-01-16','2017-01-18')
 t1=travel_intelligence('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
@@ -83,6 +85,17 @@ for i in range(len(new_dest_list_flight)):
             hotel_rental_dist.append([loc,minimum])
 
 print hotel_rental_dist
+
+
+new_flight=flight_calls('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
+flight_info=new_flight.flight_low_fare_search(m1.location,new_dest_list_flight[0][0],m1.start)
+
+new_hotel=Stay()
+hotel_info=new_hotel.getAirportHotelSearch(new_dest_list_flight[0][0],m1.start,m1.end)
+
+new_car=CarRental()
+car_info=new_car.getCarRentalAirportSearch(new_dest_list_flight[0][0],m1.start,m1.end)
+
 
 
 
