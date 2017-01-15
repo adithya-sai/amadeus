@@ -20,48 +20,48 @@ class Stay:
 		simplelist = []
 		hotels = Hotels('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
 		resp = hotels.search_airport(location=loc,check_in=ch_in,check_out=ch_out)
-		if 'results' in  resp.keys():
+		if "results" in  resp.keys():
 			for i in xrange(len(resp["results"])):
 				s = Stay()
-				s.Airport_Hotel_Search(i,resp)
+				s.property_name = resp["results"][i]["property_name"]
+				s.address = resp["results"][i]["address"]["line1"] + ' ' + resp["results"][i]["address"]["city"] + ' ' + resp["results"][i]["address"]["region"] + ' ' + resp["results"][i]["address"]["postal_code"] + ' ' + resp["results"][i]["address"]["country"]
+				s.min_daily_amount = resp["results"][i]["total_price"]["currency"] + resp["results"][i]["total_price"]["amount"]	
+				s.phone = resp["results"][i]["contacts"][0]["detail"]
+				s.fax = resp["results"][i]["contacts"][1]["detail"]
+				if "descriptions" in resp.keys():
+					s.description = resp["results"][i]["descriptions"]
+				if "room_type" in resp.keys():
+					s.room_type = resp["results"][i]["room_type_info"]["room_type"]
+					s.bed_type = resp["results"][i]["room_type_info"]["bed_type"]
+					s.number_of_beds = resp["results"][i]["room_type_info"]["number_of_beds"]
+				s.link = resp["results"][i]["_links"]["more_rooms_at_this_hotel"]["href"]
 				simplelist.append(s)
 
 		return simplelist
 
-	def getSearchCircle(self,lat,long,ch_in,ch_out):
+	def getSearchCircle(self,lat,longi,ch_in,ch_out):
 
 		simplelist = []
 		hotels = Hotels('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
-		resp = hotels.search_airport(latitiude=lat,longitude=long,radius='42',check_in=ch_in,check_out=ch_out)
+		resp = hotels.search_airport(latitiude=lat,longitude=longi,radius='42',check_in=ch_in,check_out=ch_out)
 		if 'results' in resp.keys():
 			for i in xrange(len(resp["results"])):
 				s = Stay()
-				s.Airport_Hotel_Search(i,resp)
+				s.property_name = resp["results"][i]["property_name"]
+				s.address = resp["results"][i]["address"]["line1"] + ' ' + resp["results"][i]["address"]["city"] + ' ' + resp["results"][i]["address"]["region"] + ' ' + resp["results"][i]["address"]["postal_code"] + ' ' + resp["results"][i]["address"]["country"]
+				s.min_daily_amount = resp["results"][i]["total_price"]["currency"] + resp["results"][i]["total_price"]["amount"]	
+				s.phone = resp["results"][i]["contacts"][0]["detail"]
+				s.fax = resp["results"][i]["contacts"][1]["detail"]
+				if "descriptions" in resp.keys():
+					s.description = resp["results"][i]["descriptions"]
+				if "room_type" in resp.keys():
+					s.room_type = resp["results"][i]["room_type_info"]["room_type"]
+					s.bed_type = resp["results"][i]["room_type_info"]["bed_type"]
+					s.number_of_beds = resp["results"][i]["room_type_info"]["number_of_beds"]
+				s.link = resp["results"][i]["_links"]["more_rooms_at_this_hotel"]["href"]
 				simplelist.append(s)
 
 		return simplelist
 
-	def Airport_Hotel_Search(self,x,resp):
-
-		if 'property_name' in resp.keys():
-			self.property_name = resp["results"][x]["property_name"]
-		if 'address' in resp.keys():
-			self.address = resp["results"][x]["address"]["line1"] + ' ' + resp["results"][x]["address"]["city"] + ' ' + resp["results"][x]["address"]["region"] + ' ' + resp["results"][x]["address"]["postal_code"] + ' ' + resp["results"][x]["address"]["country"]
-		if 'min_daily_amount' in resp.keys():
-			self.min_daily_amount = resp["results"][x]["total_price"]["currency"] + resp["results"][x]["total_price"]["amount"]
-		if 'contacts' in resp.keys():	
-			self.phone = resp["results"][x]["contacts"][0]["detail"]
-			self.fax = resp["results"][x]["contacts"][1]["detail"]
-		if 'descriptions' in resp.keys():
-			self.description = resp["results"][x]["descriptions"]
-		if 'room_type_info' in resp.keys():
-			self.room_type = resp["results"][x]["room_type_info"]["room_type"]
-			self.bed_type = resp["results"][x]["room_type_info"]["bed_type"]
-			self.number_of_beds = resp["results"][x]["room_type_info"]["number_of_beds"]
-		if '_links' in resp.keys():
-			self.link = resp["results"][x]["_links"]["more_rooms_at_this_hotel"]["href"]
-
-
-s = Stay()
-print s.getAirportHotelSearch('BOS','2017-01-16','2017-01-19')
+		
 
