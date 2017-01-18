@@ -18,7 +18,10 @@ class Stay:
 	def getAirportHotelSearch(self,loc,ch_in,ch_out):
 		
 		simplelist = []
-		hotels = Hotels('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
+		file = open('config.json','r')
+		api_key = file.readline()
+		file.close()
+		hotels = Hotels(api_key.strip())
 		resp = hotels.search_airport(location=loc,check_in=ch_in,check_out=ch_out)
 		if "results" in  resp.keys():
 			for i in xrange(len(resp["results"])):
@@ -42,7 +45,10 @@ class Stay:
 	def getSearchCircle(self,lat,longi,ch_in,ch_out):
 
 		simplelist = []
-		hotels = Hotels('Qpe6gVorrjycHAQGwUWQMkoL3012UOUA')
+		file = open('config.json','r')
+		api_key = file.readline()
+		file.close()
+		hotels = Hotels(api_key.strip())
 		resp = hotels.search_airport(latitiude=lat,longitude=longi,radius='42',check_in=ch_in,check_out=ch_out)
 		if 'results' in resp.keys():
 			for i in xrange(len(resp["results"])):
@@ -62,6 +68,4 @@ class Stay:
 				simplelist.append(s)
 
 		return simplelist
-
 		
-
