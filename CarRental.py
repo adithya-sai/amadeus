@@ -33,8 +33,10 @@ class CarRental:
     	simplelist = []
 
     	api_url="https://api.sandbox.amadeus.com/v1.2/cars/search-airport?apikey="
-    	api_key="Qpe6gVorrjycHAQGwUWQMkoL3012UOUA"
-    	url=api_url+api_key+'&location='+location+'&pick_up='+pick_up+'&drop_off='+drop_off
+    	file = open('config.json','r')
+    	api_key = file.readline()
+    	file.close()
+    	url=api_url+api_key.strip()+'&location='+location+'&pick_up='+pick_up+'&drop_off='+drop_off
     	data=urllib.urlopen(url)
     	resp=json.loads(data.read())
     	if "results" in resp.keys():
@@ -73,7 +75,6 @@ class CarRental:
 	        	
 
 		return simplelist
-
 
 
 
